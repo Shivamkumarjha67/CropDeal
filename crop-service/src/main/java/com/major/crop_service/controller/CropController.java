@@ -7,7 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -16,7 +18,7 @@ import com.major.crop_service.service.CropService;
 
 @Controller
 @RequestMapping("crop")
-public class Crop_controller {
+public class CropController {
 	
 	@Autowired
 	private CropService cropService;
@@ -34,5 +36,20 @@ public class Crop_controller {
 	@GetMapping("allCrop")
 	public ResponseEntity<List<CropItems>> getAllCrop() {
 		return cropService.getAllCrop();
+	}
+	
+	@PutMapping("update/{id}") 
+	public ResponseEntity<String> updateDetail(@PathVariable Long id, @RequestBody CropItems cropItems) {
+		return cropService.updateCropDetails(id, cropItems);
+	}
+	
+	@GetMapping("remove/{id}")
+	public ResponseEntity<String> removeCrop(@PathVariable Long id) {
+		return cropService.removeCrop(id);
+	}
+	
+	@GetMapping("getAllSoldCrop") 
+	public ResponseEntity<List<Long>> getAllSoldCrop() {
+		return cropService.getSoldCrop();
 	}
 }
