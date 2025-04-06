@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.major.crop_service.controller.CropController;
 import com.major.crop_service.model.CropItems;
 import com.major.crop_service.model.CropStatus;
 import com.major.crop_service.repository.CropRepository;
@@ -16,6 +17,9 @@ import com.major.crop_service.repository.CropRepository;
 class CropServiceApplicationTests {
 	@Autowired
     private CropRepository repository;
+	
+	@Autowired
+	private CropController cropController;
 
     @Test
     void checkCropAdding() {
@@ -28,6 +32,8 @@ class CropServiceApplicationTests {
         crop.setUnitPrice(new BigDecimal("20.0"));
         crop.setStatus(CropStatus.AVAILABLE);
         crop.setLocation("Bhopal");
+        
+        
     	
     	assertNotNull(repository.save(crop));
     }
