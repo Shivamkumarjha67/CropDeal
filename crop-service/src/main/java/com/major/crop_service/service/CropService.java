@@ -11,7 +11,10 @@ import org.springframework.stereotype.Service;
 import com.major.crop_service.model.CropItems;
 import com.major.crop_service.repository.CropRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class CropService {
 	
 	@Autowired
@@ -45,5 +48,12 @@ public class CropService {
 		List<Long> idsList = cropRepository.getSoldCrop("SOLD");
 		
 		return new ResponseEntity<List<Long>>(idsList, HttpStatus.ACCEPTED);
+	}
+
+	public ResponseEntity<List<CropItems>> getAllCropOfFarmer(Long farmerId) {
+		log.info("Inside the all crop controller in crop-service.......................................");
+
+		List<CropItems> crops =  cropRepository.findByFarmerId(farmerId);
+		return ResponseEntity.ok(crops);
 	}
 }

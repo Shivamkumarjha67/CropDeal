@@ -35,9 +35,9 @@ public class CropItems {
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal unitPrice;
 
-    @Enumerated(EnumType.STRING)
+    //@Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private CropStatus status;
+    private String status;
 
     @Column(nullable = false, length = 255)
     private String location;
