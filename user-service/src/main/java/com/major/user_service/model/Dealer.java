@@ -26,7 +26,5 @@ public class Dealer {
 	private String address;
 	private String state;
 	private String city;
-	private int phone;
-	
-	private String token;
+	private int phone;	
 }

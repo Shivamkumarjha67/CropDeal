@@ -10,13 +10,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FarmerDto {
-
 	private String name;
 	private String accountNumber;
 	private String address;
 	private String state;
 	private String city;
-	private int phone;
-	
-	private String token;
+	private int phone;	
 }

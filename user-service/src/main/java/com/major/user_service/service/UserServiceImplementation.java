@@ -10,7 +10,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.major.user_service.dto.UserDto;
+import com.major.user_service.model.Dealer;
+import com.major.user_service.model.Farmer;
 import com.major.user_service.model.User;
+import com.major.user_service.repository.DealerRepository;
+import com.major.user_service.repository.FarmerRepository;
 import com.major.user_service.repository.UserRepository;
 import com.major.user_service.util.JwtUtil;
 
@@ -22,6 +26,12 @@ public class UserServiceImplementation implements UserService {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private FarmerRepository farmerRepository;
+	
+	@Autowired
+	private DealerRepository dealerRepository;
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
@@ -44,6 +54,22 @@ public class UserServiceImplementation implements UserService {
                 .build();
 		
 		userRepository.save(user);
+		
+		if(user.getRole().equalsIgnoreCase("Farmer")) {
+			Farmer farmer = Farmer.builder()
+					.name(user.getName())
+					.email(user.getEmail())
+					.build();
+			
+			farmerRepository.save(farmer);
+		} else {
+			Dealer dealer = Dealer.builder()
+					.name(user.getName())
+					.email(user.getEmail())
+					.build();
+			
+			dealerRepository.save(dealer);
+		}
 		
 		return new ResponseEntity<String>("User registered successfully...", HttpStatus.OK);
 	}
