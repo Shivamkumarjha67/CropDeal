@@ -12,12 +12,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.major.crop_service.model.CropItems;
 import com.major.crop_service.service.CropService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
 @RequestMapping("crop")
+@Slf4j
 public class CropController {
 	
 	@Autowired
@@ -51,5 +55,11 @@ public class CropController {
 	@GetMapping("getAllSoldCrop") 
 	public ResponseEntity<List<Long>> getAllSoldCrop() {
 		return cropService.getSoldCrop();
+	}
+	
+	// Getting the crop with given farmerId
+	@GetMapping("allCropOfFarmer") 
+	public ResponseEntity<List<CropItems>> getAllCropOfFarmer(@RequestParam("id") Long farmerId) {
+		return cropService.getAllCropOfFarmer(farmerId);
 	}
 }
