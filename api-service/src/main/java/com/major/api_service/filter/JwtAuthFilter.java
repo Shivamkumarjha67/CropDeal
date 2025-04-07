@@ -40,9 +40,18 @@ public class JwtAuthFilter implements WebFilter {
                 List<GrantedAuthority> authorities = jwtUtil.extractAuthorities(token);
 
                 Authentication auth = new UsernamePasswordAuthenticationToken(email, null, authorities);
+                
+                ServerWebExchange mutatedExchange = exchange.mutate()
+                	    .request(builder -> builder
+                	        .headers(httpHeaders -> {
+                	            httpHeaders.set("X-User-Email", email);
+                	            httpHeaders.set(HttpHeaders.AUTHORIZATION, authHeader);
+                	        })
+                	    ).build();
+
 
                 // Inject the authentication into the reactive security context
-                return chain.filter(exchange)
+                return chain.filter(mutatedExchange)
                         .contextWrite(ReactiveSecurityContextHolder.withAuthentication(auth));
             }
         }
