@@ -49,8 +49,6 @@ public class StripeService {
             SessionCreateParams params =
                     SessionCreateParams.builder()
                             .setMode(SessionCreateParams.Mode.PAYMENT)
-                            .setSuccessUrl("http://localhost:8888/success")
-                            .setCancelUrl("http://localhost:8888/cancel")
                             .addLineItem(lineItem)
                             .build();
 
@@ -71,5 +69,4 @@ public class StripeService {
                     .sessionUrl(session.getUrl())
                     .build();
     }
-
 }
