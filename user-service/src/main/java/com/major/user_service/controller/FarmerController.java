@@ -23,6 +23,7 @@ import reactor.core.publisher.Mono;
 
 @Controller
 @RequestMapping("farmer")
+// @PreAuthorize("FARMER")
 @Slf4j
 public class FarmerController {
 	

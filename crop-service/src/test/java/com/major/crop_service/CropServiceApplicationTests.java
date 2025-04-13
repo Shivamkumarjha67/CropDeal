@@ -30,7 +30,7 @@ class CropServiceApplicationTests {
         crop.setCropName("Broccoli");
         crop.setQuantity(45.50);
         crop.setUnitPrice(new BigDecimal("20.0"));
-        crop.setStatus(CropStatus.AVAILABLE);
+//        crop.setStatus(CropStatus.AVAILABLE);
         crop.setLocation("Bhopal");
         
         

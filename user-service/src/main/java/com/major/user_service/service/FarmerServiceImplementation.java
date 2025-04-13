@@ -1,6 +1,5 @@
 package com.major.user_service.service;
 
-import java.time.Duration;
 import java.util.List;
 import java.util.Optional;
 
@@ -89,16 +88,17 @@ public class FarmerServiceImplementation implements FarmerService {
 		
 		List<CropDto> cropList = webClientBuilder.build()
 			    .get()
-			    .uri("http://api-service/crop/allCropOfFarmer/{id}", id)
+			    .uri("http://api-service/crop/getAllCropOfFarmer/{id}", id)
 			    .retrieve()
 			    .bodyToFlux(CropDto.class)
-			    .timeout(Duration.ofSeconds(5))
 			    .onErrorResume(ex -> {
 			        log.error("Failed to fetch crops for farmer: {}", id, ex);
 			        return Flux.empty();
 			    })
 			    .collectList()
 			    .block();
+		
+		log.info("--------------------          Crop list is: " + cropList);
 
 		return Mono.just(ResponseEntity.ok(cropList));
 	}

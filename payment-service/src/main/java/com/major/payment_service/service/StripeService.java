@@ -26,6 +26,8 @@ public class StripeService {
                     SessionCreateParams.LineItem.PriceData.ProductData.builder()
                             .setName(productRequest.getName())
                             .build();
+            
+            System.out.println("1 secret key --------------> " + secretKey);
 
            // Convert Double amount to long in cents (e.g., $10.50 => 1050 cents)
             long amountInCents = Math.round(productRequest.getAmount() * 100);
@@ -36,6 +38,8 @@ public class StripeService {
                             .setUnitAmount(amountInCents)
                             .setProductData(productData)
                             .build();
+            
+            System.out.println("2 secret key --------------> " + secretKey);
 
             // Create new line item with the above price data
             SessionCreateParams.LineItem lineItem =
@@ -47,10 +51,14 @@ public class StripeService {
 
             // Create new session with the line items
             SessionCreateParams params =
-                    SessionCreateParams.builder()
-                            .setMode(SessionCreateParams.Mode.PAYMENT)
-                            .addLineItem(lineItem)
-                            .build();
+            		SessionCreateParams.builder()
+                    .setMode(SessionCreateParams.Mode.PAYMENT)
+                    .setSuccessUrl("http://localhost:4200/payment/success") // ✅ required
+                    .setCancelUrl("http://localhost:4200/payment/cancel")   // ✅ required
+                    .addLineItem(lineItem)
+                    .build();
+            
+            System.out.println("3 secret key --------------> " + secretKey);
 
             // Create new session
             Session session = null;
@@ -59,6 +67,15 @@ public class StripeService {
             } catch (StripeException e) {
                 //log the error
             	System.out.println("Error in creating the seesion : " + e.getMessage());
+            }
+            
+            System.out.println("4 secret key --------------> " + secretKey);
+            
+            if (session == null) {
+                return StripeResponse.builder()
+                        .status("FAILURE")
+                        .message("Failed to create payment session.")
+                        .build();
             }
 
             return StripeResponse

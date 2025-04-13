@@ -37,6 +37,7 @@ public class UserController {
 		return userService.registerUser(userDto);
 	}
 	
+	// @PreAuthorize("hasAnyRole('Farmer', 'Dealer')")
 	@GetMapping("/login") 
 	public ResponseEntity<String> loginUser(@RequestParam String email, @RequestParam String password) {
 		log.info("entered--------------");
